@@ -1,0 +1,46 @@
+typedef struct ListNode 
+{
+    int val;
+ 	struct ListNode *next;
+}Node,*LinkList;
+
+
+LinkList mergeTwoLists(LinkList *l1, LinkList *l2) 
+{
+    //判断其中一表或两表都为空的情况
+    if(!l1 && l2)
+        return l2;
+    if(l1 && !l2)
+        return l1;
+    if(!l1 && !l2)
+        return NULL;
+    
+    // 定义头指针head，p为新链表的节点
+    LinkList head;
+    LinkList p;
+    if(l1->val <= l2->val)
+        head=l1;
+    	l1=l1->next;
+    else
+        head=l2;
+    	l2=L2->next
+    p=head;
+    
+    //遍历比较大小，小的地址存到p里面,p依次后移
+    while(l1 && l2)
+    {
+        if(l1->val <= l2->val)
+            p->next=l1;
+        	l1=l1->next;
+        	p=p->next;
+        else 
+            p->next=l2;
+        	l2=l2->next;
+        	p=p>next;
+    }
+  	if(!l1 && l2)
+ 		p->next=l2;
+  	else 
+      	p->next=l1;
+    return head;
+}
