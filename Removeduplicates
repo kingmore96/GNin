@@ -1,25 +1,15 @@
 C语言解法：
 对比前后两个val，相同的删除
-/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     struct ListNode *next;
- * };
- */
-struct ListNode* deleteDuplicates(struct ListNode* head) {
-    struct ListNode* p;
-    struct ListNode* q;
-    p=head;
-    while(p)
+struct ListNode* deleteDuplicates(struct ListNode* head) 
+{
+    if(head)
     {
-        if(p->next->val=p->val)
+        struct ListNode *p = head;
+        while (p && p->next)
         {
-           q=p->next;
-           p->next=p->next->next;
-           free(q);
+            if (p->val != p->next->val) p=p->next;
+            else p->next=p->next->next;
         }
-        p=p->next;
-    } 
+    }
     return head;
 }
