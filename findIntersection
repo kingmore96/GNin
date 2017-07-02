@@ -1,0 +1,14 @@
+struct ListNode *getIntersectionNode(struct ListNode *headA, struct ListNode *headB) 
+{
+    struct ListNode *p=headA;
+    struct ListNode *q=headB;
+    if( !headA || !headB) return NULL;
+    else
+        while(p && q)
+        {
+            if(p->val<q->val) p=p->next;
+            else if(p->val>q->val) q=q->next;
+            else if(p->val=q->val) return p;
+        }
+        return NULL;
+}
