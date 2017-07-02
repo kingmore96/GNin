@@ -1,0 +1,17 @@
+核心思想：没有前地址，但是可以交换数值，删除后一个即可
+
+void deleteNode(struct ListNode* node) 
+{
+    struct ListNode *p=node;
+    struct ListNode *q;
+    if(p && p->next)
+    {
+        q=p->val;
+        p->val=p->next->val;
+        p->next->val=q;//交换数值
+        
+        q=p->next;
+        p->next=p->next->next;//删除后一个结点
+        free(q);//释放内存
+    }   
+}
