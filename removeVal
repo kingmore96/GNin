@@ -1,0 +1,42 @@
+给一个链表，和一个数，去除链表中相同的数
+1、找头指针的位置
+2、头指针为空时返回空
+3、pre和cur指针，cur不满足的时候，pre->next=cur pre移到cur的位置；满足的时候pre位置不动，pre的next也不存，cur往后移
+4、遍历到表尾时，注意pre的next要收尾NULL，否则会输出pre后面的数字
+
+struct ListNode* removeElements(struct ListNode* head, int val) 
+{
+    struct ListNode *p;//找头指针用的变量和后来遍历的变量
+    struct ListNode *pre;
+    struct ListNode *cur;
+    struct ListNode *ret;//保存新的头结点的地址
+    
+    if(!head) return NULL;
+    else p=head;
+    
+    //找头指针
+    while(p && p->val==val)
+    {    
+        p=p->next;
+    }
+    
+    if(!p) return NULL;//找到最后一个都是val所以返回的链表没有结点
+    else 
+    {
+        ret=p;
+        pre=p;
+        cur=p->next;
+    }
+    
+    while(cur)
+    {
+        if(cur->val!=val)
+        {
+            pre->next=cur;
+            pre=cur;
+        }    
+        cur=cur->next;
+    }
+    pre->next=NULL;
+    return ret;    
+}
