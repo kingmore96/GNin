@@ -1,0 +1,24 @@
+struct ListNode* oddEvenList(struct ListNode* head) 
+{
+    struct ListNode* oddCurr,*evenHead,*evenCurr;  
+    
+    if(!head || ! head->next ||!head->next->next) 
+          return head;
+    
+    oddCurr=head;
+    evenHead=head->next;
+    evenCurr=evenHead;
+    
+   while (oddCurr->next && evenCurr->next) 
+   {
+        oddCurr->next = evenCurr->next;
+        oddCurr = evenCurr->next;
+        evenCurr->next = oddCurr->next;
+        evenCurr = oddCurr->next;
+    }
+    
+    oddCurr->next = evenHead;
+    
+    return head;
+   
+}
