@@ -1,0 +1,48 @@
+struct ListNode* removeNthFromEnd(struct ListNode* head, int n)
+{
+    struct ListNode*p;
+    int len=1,j=1;
+
+    if(!head) return head;
+
+    //遍历得到链表长度
+    p=head;
+    while(p->next)
+    {
+        p=p->next;
+        len=len+1;
+    }
+    
+    if(len==1 && n==1)
+        return NULL;
+    
+    if(len>1)
+        n=len+1-n;
+
+    //当删除第一个数值时特殊处理下
+    if(n==1)
+    {
+        head=head->next;
+    }
+    //非第一个数值，开始遍历找到n-1个位置
+    else if(n>1)
+    {
+        p=head;    
+        while(p->next && j+1<n)
+        {
+            p=p->next;
+            j=j+1;
+        }
+        //删除最后一个数据时特殊处理下
+        if(p->next->next)
+        {
+            p->next=p->next->next;
+        }
+        else
+        {
+            p->next=NULL;
+
+        }
+    }
+    return head;
+}
