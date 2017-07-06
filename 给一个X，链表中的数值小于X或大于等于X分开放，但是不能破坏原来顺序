@@ -1,0 +1,37 @@
+struct ListNode* partition(struct ListNode* head, int x) 
+{
+    struct ListNode *p, *nhs,*nhl,*cn1,*cn2;//待比较的数值，nhs nhl是新的头结点，cn1 cn2 移动的指针
+    struct ListNode *t;
+    if(!head || !head->next) return head;
+    
+    nhs=(struct ListNode*)malloc(sizeof(struct ListNode));
+    nhl=(struct ListNode*)malloc(sizeof(struct ListNode));
+    
+    nhs->next=NULL;
+    nhl->next=NULL;
+    
+    cn1=nhs;
+    cn2=nhl;
+    p=head;
+    
+    while(p)
+    {   
+        t=p->next;
+        if(p->val<x)
+        {
+            cn1->next=p;
+            p->next=NULL;
+            cn1=cn1->next;
+        }
+        else
+        {
+            cn2->next=p;
+            p->next=NULL;
+            cn2=cn2->next;
+        }
+        p=t;
+    }
+    
+    cn1->next=nhl->next;
+    return nhs->next;   
+}
