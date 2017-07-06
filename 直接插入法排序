@@ -1,0 +1,72 @@
+struct ListNode* insertionSortList(struct ListNode* head) 
+{
+    struct ListNode *nh;//有序的空节点
+    struct ListNode *p,*t;//待比较的数值
+    struct ListNode *cn,*pre,*jl;//移动的指针，用于每次和待比较数值对比,一个前一个后
+    int j;
+    
+    if(!head || !head->next) return head;
+    
+    else
+    {   //定义一个新的结点,里面存入head的数值
+        nh=(struct ListNode*)malloc(sizeof(struct ListNode));
+        nh->next=NULL;
+        nh->val=head->val;
+        
+        //无序链表中待比较的数值
+        p=head->next;
+        
+        
+        while(p)
+        {
+            //cn是会后续移动的，cn的初始值指向nh,pre是一个新的结点，指向cn,里面存入0
+            pre=(struct ListNode*)malloc(sizeof(struct ListNode));
+            cn=nh;
+            pre->next=cn;
+            pre->val=0;
+            t=p->next;
+            jl=cn->next;
+            
+            while(cn)
+            {
+               //cn后面没有结点了，且比nh大，直接插到最后一个
+               if(p->val > cn->val && !cn->next )
+               {
+                   cn->next=p;
+                   p->next=NULL;
+                   break; 
+               }
+              
+               //如果待比较的值小于或等于nh中的值，插在后面，换一下数值即可
+               if(p->val <= cn->val && !cn->next) 
+               {
+                   cn->next=p;
+                   p->next=NULL;//p插到后面
+                   j=cn->val;
+                   cn->val=p->val;
+                   p->val=j;//换数值
+                   break;
+               }
+               if(p->val <= cn->val && cn->next)
+               {
+                   p->next=jl;
+                   cn->next=p;
+                   j=cn->val;
+                   cn->val=p->val;
+                   p->val=j;
+                   break;
+                   
+               }
+               //如果待比较的值大于有序链表中的值，并且没对比到最后一个cn，指针后移
+               if(p->val > cn->val && cn->next)
+               {
+                   pre=cn;
+                   cn=cn->next;
+                   jl=jl->next;
+               }
+            }
+            p=t;  
+        }
+        return nh;
+    }
+}
