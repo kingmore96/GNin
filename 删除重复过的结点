@@ -1,0 +1,32 @@
+struct ListNode* deleteDuplicates(struct ListNode* head)
+{
+    int k = 0;//记录链表里面重复的数字
+    struct ListNode* h=malloc(sizeof(struct ListNode)), *y = head ,*t;//h新节点，并且可移动，y指向head，遍历head，*t临时结点存储y->next的值
+    struct ListNode* p = h;//p指向h
+    
+   //y和y的下一个都有的情况下才遍历
+   while(y && y->next)
+   {
+      if(y->val == y->next->val)
+      {
+         k = y->val;
+         while(y && y->val==k) y=y->next; //y是空的时候代表没找到，y不是空代表找到了一个，如果还有下一个结点，需要继续判断
+      } 
+       else 
+       {
+         h->next = y;
+         t=y->next;
+         y->next=NULL;
+         h = h->next;
+         y = t;
+      }
+    }
+    
+  if(y) //前面都是重复的，只有这个y不重复，并且跳出了循环，代表后面没有数，所以这个链表里面只有它
+   h->next = y;
+    
+  if(!y) //y不是空而且还跳出了循环，代表y->next是空，y是最后一个数字
+   h->next = NULL;
+    
+  return p->next;
+}
