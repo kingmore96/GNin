@@ -1,4 +1,4 @@
-快慢指针法
+快慢指针法，判断是否存在循环
 /**
  * Definition for singly-linked list.
  * struct ListNode {
@@ -16,4 +16,33 @@ bool hasCycle(struct ListNode *head) {
             return true;
     }
     return false;
+}
+
+
+2、给出一个head，判断是否是循环，如果是，求出循环节点
+struct ListNode *detectCycle(struct ListNode *head) 
+{ 
+    if(!head)
+        return NULL;
+    
+    struct ListNode *fast=head;
+    struct ListNode *slow=head; 
+    
+    while(fast && fast->next)
+    {
+        fast=fast->next->next;
+        slow=slow->next;
+        
+        if(fast==slow)
+        {
+            slow=head;
+            while(slow!=fast)
+            {
+                slow=slow->next;
+                fast=fast->next;
+            }
+            return slow;
+        }
+    }
+    return NULL;
 }
