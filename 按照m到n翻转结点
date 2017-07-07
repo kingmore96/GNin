@@ -1,0 +1,53 @@
+struct ListNode* reverseBetween(struct ListNode* head, int m, int n) 
+{
+    struct ListNode *p, *q, *ret; // ret为翻转后的头指针,p是翻转之后的最后一个节点，q是最后一个节点的下一个结点
+    struct ListNode *h1, * h2;           // h1 : m之前的结点指针 h2记录的是第一个翻转的结点 
+                                         //注意，这里h2不能省略，因为ret一直指的是最新的头指针是变化的，所以需要一个不变的指针
+    int count = 1;
+
+    if(!head || !head->next || m==n)
+        return head;
+    
+    p = head;
+    h1 = p;
+    
+    //记录开始翻转的结点位置p，和这个结点之前的指针h1
+    while(p && count<m)
+    {
+        h1 = p;
+        p = p->next;
+        count++;
+    }
+    
+    //m是负数或者m大于链表的长度，都会导致p为空
+    if(!p)
+        return head;
+       
+    //h2是m的结点
+    h2=p;
+    ret= p;
+    q = p->next;
+    
+    //知道n，可以控制翻转次数，就不需要求末尾指针了
+    while(ret && q && p && count<n)
+    {
+        p->next=q->next;
+        q->next=ret;
+        ret=q;
+        q=p->next;
+        count++;
+    }
+
+    if(h1 == h2)                // if m=1
+    {
+        h1->next = q;
+        head = ret;
+    }
+    else
+    {
+        h1->next = ret;
+        p->next = q;
+    }
+
+    return head;
+}
