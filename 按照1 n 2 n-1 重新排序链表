@@ -1,0 +1,46 @@
+struct ListNode *ReverseList(struct ListNode *p)
+{
+    struct ListNode *ret,*q;
+    ret=p;
+    q=p->next;
+    while(q)
+    {
+        p->next=q->next;
+        q->next=ret;
+        ret=q;
+        q=p->next;
+    }
+    return ret;
+}
+
+void reorderList(struct ListNode* head) 
+{
+    struct ListNode *fast,*slow;
+    struct ListNode *nl,*p,*t1,*t2;
+    if(!head || !head->next ||!head->next->next)
+        return head;
+    
+    fast=head;
+    slow=head;
+    
+    while(fast && fast->next)
+    {
+        fast=fast->next->next;
+        slow=slow->next;
+    }
+    
+    fast=slow;
+    slow=ReverseList(slow->next);
+    fast->next=NULL;
+    p=head;
+    while(p->next && slow)
+    {
+        t1=p->next;
+        t2=slow->next;
+        slow->next=p->next;
+        p->next=slow;
+        p=t1;
+        slow=t2;
+    }
+        
+}
