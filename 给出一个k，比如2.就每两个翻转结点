@@ -1,0 +1,62 @@
+struct ListNode* reverseKGroup(struct ListNode* head, int k) 
+{  
+    struct ListNode *ret,*p,*q,*ret2,*tl;
+    int len=1;
+    int count=0;
+    int rcount=1;
+    
+    if(!head || !head->next)
+       return head;
+    if(k==1) return head;
+    
+    p=head;
+    while(p->next)
+    {
+        len=len+1;
+        p=p->next;
+    }
+    
+    if(k > len)
+        return head;
+    
+    else if(k<=len)
+    {
+        //第一次翻转，需要保存下头结点
+        ret=head;
+        p=head;
+        q=head->next;
+
+        while(rcount<k && q)
+        {
+            p->next=q->next;
+            q->next=ret;
+            ret=q;
+            q=p->next;
+            rcount=rcount+1;
+        }
+        //记录初始头结点位置
+        ret2=ret;
+        count=count+1;
+
+        while((len-count*k)>=k && q)
+        {
+            tl=p;
+            ret=q;
+            p=q;
+            q=p->next;
+            rcount=1;
+            while(q && rcount<k)
+            {
+                p->next=q->next;
+                q->next=ret;
+                tl->next=q;
+                ret=q;
+                q=p->next;
+                rcount=rcount+1;
+                
+            }
+            count=count+1;
+        }
+    }
+     return ret2;
+}
