@@ -1,0 +1,32 @@
+/**
+ * Return an array of size *returnSize.
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+int* nextGreaterElement(int* findNums, int findNumsSize, int* nums, int numsSize, int* returnSize) 
+{
+    int* result = (int*)malloc(findNumsSize * sizeof(int));
+    *returnSize = findNumsSize;
+    
+    for(int i=0; i<findNumsSize; i++)
+    {
+        for(int j=0; j<numsSize; j++)
+        {
+            if(*(nums+j) == *(findNums+i))
+            {
+                int k=j+1;
+                for(;k<numsSize;k++)
+                {
+                    if(*(nums+k)>*(findNums+i))
+                    {
+                        *(result+i)=*(nums+k);
+                        break;
+                    }
+                }
+                if(k == numsSize)
+                *(result+i)=-1;
+                break;
+            }
+        }
+    }
+    return result;
+}
