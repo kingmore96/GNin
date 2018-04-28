@@ -1,5 +1,6 @@
 struct ListNode* oddEvenList(struct ListNode* head) 
 {
+	//你好，这是第一次修改
     struct ListNode* oddCurr,*evenHead,*evenCurr;  
     
     if(!head || ! head->next ||!head->next->next) 
